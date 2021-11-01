@@ -11,6 +11,8 @@ import { UserService } from 'src/app/shared/user.service';
   ]
 })
 export class RegistrationComponent implements OnInit {
+ submitReason:boolean=false;
+ UserErrorMessage:string="Username and Password is not correct";
 
   constructor(public service: UserService, private toastr:ToastrService) { }
 
@@ -18,7 +20,16 @@ export class RegistrationComponent implements OnInit {
     this.service.formModel.reset();
   }
 
+
   onSubmit(){
+    this.submitReason=true;
+    if (this.service.formModel.invalid) {
+
+      return;
+
+    }
+
+
     this.service.register().subscribe(
       (res:any) =>{
         if(res.succeded){
